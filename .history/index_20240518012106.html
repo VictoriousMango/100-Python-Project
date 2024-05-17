@@ -32,10 +32,10 @@
                 Projects according to Level
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#Beginner">Beginner</a></li>
-                <li><a class="dropdown-item" href="#Intermediate">Intermediate</a></li>
-                <li><a class="dropdown-item" href="#Advanced">Advanced</a></li>
-                <li><a class="dropdown-item" href="#Professional">Professional</a></li>
+                <li><a class="dropdown-item" href="#">Beginner</a></li>
+                <li><a class="dropdown-item" href="#">Intermediate</a></li>
+                <li><a class="dropdown-item" href="#">Advanced</a></li>
+                <li><a class="dropdown-item" href="#">Professional</a></li>
               </ul>
             </li>
           </ul>
@@ -46,62 +46,9 @@
           </form>
       </div>
     </nav>
-
-
-    <!-- Tabular Entry Start -->
-    <table class="table table-bordered table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Project Name</th>
-          <th scope="col">Tech</th>
-          <th scope="col">Link</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Beginner Projects -->
-        <div class="Beginner" id="Beginner">
-          <tr class="table-primary">
-            <th scope="row">A</th>
-            <td>Beginner</td>
-            <td> -- </td>
-            <td> -- </td>
-          </tr>
-        </div>
-
-        <!-- Intermediate Project Links -->
-        <div class="Intermediate" id="Intermediate">
-          <tr class="table-primary">
-            <th scope="row">B</th>
-            <td>Intermediate</td>
-            <td> -- </td>
-            <td> -- </td>
-          </tr>
-        </div>
-        
-        <!-- Advanced Project Links -->
-        <div class="Advanced" id="Advanced">
-          <tr class="table-primary">
-            <th scope="row">C</th>
-            <td>Advanced</td>
-            <td> -- </td>
-            <td> -- </td>
-          </tr>
-        </div>
-
-        <!-- Professional Links -->
-        <div class="Professional" id="Professional">
-          <tr class="table-primary">
-            <th scope="row">D</th>
-            <td>Professional</td>
-            <td> -- </td>
-            <td> -- </td>
-          </tr>
-        </div>
-        
-      </tbody>
-    </table>
-    <!-- Tabular Entry End -->
+    {% block index.html %}
+      
+    {% endblock index.html %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
