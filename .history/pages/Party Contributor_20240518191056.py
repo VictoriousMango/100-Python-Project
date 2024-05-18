@@ -14,8 +14,7 @@ class Distributor():
             col2.number_input(f"How Much Paid - Transaction:{entryNumber}"), 
             col3.text_input(f"Who all will contribute - Transaction:{entryNumber}")
             ])
-            
-        if col4.slider(f"Log Transaction:{entryNumber+1}", min_value=0, max_value=1) == 1:
+        if col4.button(f"Log Transaction:{entryNumber+1}"):
             entryNumber+=1
             self.log(entryNumber)
     def EqualDistributor(self):
@@ -61,6 +60,6 @@ if st.button("Calculate Equal Distribution"):
 with st.expander("Log Distribution"):
     with st.spinner("Generating per person Contribution!!!"):
         message = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0]).NonLinerDistribution()
-st.table(message)
+    st.table(message)
         
     

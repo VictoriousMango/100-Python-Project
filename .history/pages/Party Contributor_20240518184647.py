@@ -5,26 +5,17 @@ class Distributor():
     def __init__(self, numberOfPeople, TotalAmount):
         self.numberOfPeople = numberOfPeople
         self.TotalAmount = TotalAmount
-        self.distribution = []
     
-    def log(self, entryNumber):
-        col1, col2, col3, col4 = st.columns([1, 1, 1, 1]) 
-        self.distribution.append([
-            col1.text_input(f"Who Paid - Transaction:{entryNumber}"), 
-            col2.number_input(f"How Much Paid - Transaction:{entryNumber}"), 
-            col3.text_input(f"Who all will contribute - Transaction:{entryNumber}")
-            ])
-            
-        if col4.slider(f"Log Transaction:{entryNumber+1}", min_value=0, max_value=1) == 1:
-            entryNumber+=1
-            self.log(entryNumber)
     def EqualDistributor(self):
         return self.TotalAmount/self.numberOfPeople
 
     def NonLinerDistribution(self):
+        col1, col2, col3 = st.columns([1, 1, 1]) 
+        
+        distribution = []
         TotalAmount = self.TotalAmount
-        entry = self.log(1)
-        return self.distribution
+        entry = [col1.text_input("Who Paid"), col2.number_input("How Much Paid"), col3.text_input("Who all will contribute")]
+        distribution.append(entry)
 
 
 class Email ():
@@ -58,9 +49,9 @@ if st.button("Calculate Equal Distribution"):
         message = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0]).EqualDistributor()
     st.success(message)
 
-with st.expander("Log Distribution"):
+if st.button("Calculate UnEqual Distribution"):
     with st.spinner("Generating per person Contribution!!!"):
         message = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0]).NonLinerDistribution()
-st.table(message)
+    st.table(message)
         
     

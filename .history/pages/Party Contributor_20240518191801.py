@@ -61,6 +61,6 @@ if st.button("Calculate Equal Distribution"):
 with st.expander("Log Distribution"):
     with st.spinner("Generating per person Contribution!!!"):
         message = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0]).NonLinerDistribution()
-st.table(message)
+    st.table(message)
         
     
