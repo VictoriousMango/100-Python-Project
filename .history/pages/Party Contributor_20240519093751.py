@@ -33,12 +33,12 @@ class Distributor():
         self.entryBalancePerPerson(
             Name=self.Log.loc[len(self.Log.index) - 1][0],
             Spent=self.Log.loc[len(self.Log.index) - 1][2], 
-            Receive=self.Log.loc[len(self.Log.index) - 1][2] - self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3])+1 )
+            Receive=self.Log.loc[len(self.Log.index) - 1][2] - self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3]))
         )
         for i in self.Log.loc[len(self.Log.index) - 1][3]:
             self.entryBalancePerPerson(
                 Name=i, 
-                Spent=self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3]) + 1),
+                Spent=self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3])),
                 Receive=0
             )
 

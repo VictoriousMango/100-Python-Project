@@ -10,11 +10,11 @@ class Distributor():
         self.BalanceTable = pd.DataFrame(columns=['Name', 'Have Spent', 'Will Receive', 'Net Total'])
         self.BalancePerPerson = {'Name':[], 'Have Spent':[], 'Will Receive':[], 'Net Total':[]}
     
-    def entryBalancePerPerson(self, Name, Spent, Receive):
+    def entryBalancePerPerson(self, Name, Spent):
         self.BalancePerPerson['Name'].append(Name)
-        self.BalancePerPerson['Have Spent'].append(Spent)
-        self.BalancePerPerson['Will Receive'].append(Receive)
-        self.BalancePerPerson['Net Total'].append(Spent-Receive)
+        self.BalancePerPerson['Have Spent'].append(0)
+        self.BalancePerPerson['Will Receive'].append(0)
+        self.BalancePerPerson['Net Total'].append(0)
     
     def EqualDistributor(self, TotalAmount, numberOfPeople):
         return TotalAmount/numberOfPeople
@@ -28,19 +28,8 @@ class Distributor():
             col3.number_input(f"How Much Paid - Transaction:{entryNumber}"), 
             [i.strip() for i in col4.text_input(f"Contributors - Transaction:{entryNumber}").split(',')]
             ]
-        
-        # Entry in Balance Sheet
-        self.entryBalancePerPerson(
-            Name=self.Log.loc[len(self.Log.index) - 1][0],
-            Spent=self.Log.loc[len(self.Log.index) - 1][2], 
-            Receive=self.Log.loc[len(self.Log.index) - 1][2] - self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3])+1 )
-        )
-        for i in self.Log.loc[len(self.Log.index) - 1][3]:
-            self.entryBalancePerPerson(
-                Name=i, 
-                Spent=self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3]) + 1),
-                Receive=0
-            )
+        for i in [self.Log.loc[len(self.Log.index) - 1][0]] + self.Log.loc[len(self.Log.index) - 1][3]:
+            self.entryBalancePerPerson(i, self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3])))
 
         if col5.select_slider(f"Log Transaction:{entryNumber+1}", options=['No', 'Yes']) == 'Yes':
             entryNumber+=1

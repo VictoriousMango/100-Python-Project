@@ -6,61 +6,28 @@ class Distributor():
     def __init__(self, numberOfPeople, TotalAmount):
         self.numberOfPeople = numberOfPeople
         self.TotalAmount = TotalAmount
-        self.Log = pd.DataFrame(columns=['Who Paid', 'Item', 'How much Paid', 'Contributors'])
+        self.distribution = pd.DataFrame(columns=['Who Paid', 'Item', 'How much Paid', 'Contributors'])
         self.BalanceTable = pd.DataFrame(columns=['Name', 'Have Spent', 'Will Receive', 'Net Total'])
-        self.BalancePerPerson = {'Name':[], 'Have Spent':[], 'Will Receive':[], 'Net Total':[]}
-    
-    def entryBalancePerPerson(self, Name, Spent, Receive):
-        self.BalancePerPerson['Name'].append(Name)
-        self.BalancePerPerson['Have Spent'].append(Spent)
-        self.BalancePerPerson['Will Receive'].append(Receive)
-        self.BalancePerPerson['Net Total'].append(Spent-Receive)
-    
-    def EqualDistributor(self, TotalAmount, numberOfPeople):
-        return TotalAmount/numberOfPeople
     
     def log(self, entryNumber):
         col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 1]) 
-        # Used for Logging
-        self.Log.loc[len(self.Log.index)] = [
+        self.distribution.loc[len(self.distribution.index)] = [
             col1.text_input(f"Who has Paid - Transaction:{entryNumber}"), 
             col2.text_input(f"Item Paid For - Transaction:{entryNumber}"),
             col3.number_input(f"How Much Paid - Transaction:{entryNumber}"), 
             [i.strip() for i in col4.text_input(f"Contributors - Transaction:{entryNumber}").split(',')]
             ]
-        
-        # Entry in Balance Sheet
-        self.entryBalancePerPerson(
-            Name=self.Log.loc[len(self.Log.index) - 1][0],
-            Spent=self.Log.loc[len(self.Log.index) - 1][2], 
-            Receive=self.Log.loc[len(self.Log.index) - 1][2] - self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3])+1 )
-        )
-        for i in self.Log.loc[len(self.Log.index) - 1][3]:
-            self.entryBalancePerPerson(
-                Name=i, 
-                Spent=self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3]) + 1),
-                Receive=0
-            )
-
+            
         if col5.select_slider(f"Log Transaction:{entryNumber+1}", options=['No', 'Yes']) == 'Yes':
             entryNumber+=1
             self.log(entryNumber)
-    
-    
-    def BalanceSheet(self):
-        Names = list(set(list(i for i in self.Log["Who Paid"])))
-        BalancePerPerson = {
-            'Name': Names,
-            'Have Spent': [0 for i in Names],
-            'Will Receive': [0 for i in Names],
-            'Net Total': [0 for i in Names]
-        }
-
-        return self.BalancePerPerson
+    def EqualDistributor(self):
+        return self.TotalAmount/self.numberOfPeople
 
     def NonLinerDistribution(self):
-        self.log(1)
-        return self.Log
+        TotalAmount = self.TotalAmount
+        entry = self.log(1)
+        return self.distribution
 
 
 class Email ():
@@ -96,11 +63,7 @@ if st.button("Calculate Equal Distribution"):
 
 with st.expander("Log Distribution"):
     with st.spinner("Generating per person Contribution!!!"):
-        Party = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0])
-        Log = Party.NonLinerDistribution()
-        BalanceSheet = Party.BalanceSheet()
-st.table(Log)
-
-with st.expander("Contribution per person Generated"):
-    st.table(BalanceSheet)
+        message = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0]).NonLinerDistribution()
+st.table(message)
+        
     

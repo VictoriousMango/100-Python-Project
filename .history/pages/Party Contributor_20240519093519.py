@@ -8,13 +8,13 @@ class Distributor():
         self.TotalAmount = TotalAmount
         self.Log = pd.DataFrame(columns=['Who Paid', 'Item', 'How much Paid', 'Contributors'])
         self.BalanceTable = pd.DataFrame(columns=['Name', 'Have Spent', 'Will Receive', 'Net Total'])
-        self.BalancePerPerson = {'Name':[], 'Have Spent':[], 'Will Receive':[], 'Net Total':[]}
+        self.BalancePerPerson = {'Name':[], 'Have Spent':[], 'Will Receive':[], 'Remaining Expenditure':[]}
     
     def entryBalancePerPerson(self, Name, Spent, Receive):
         self.BalancePerPerson['Name'].append(Name)
         self.BalancePerPerson['Have Spent'].append(Spent)
         self.BalancePerPerson['Will Receive'].append(Receive)
-        self.BalancePerPerson['Net Total'].append(Spent-Receive)
+        self.BalancePerPerson['Remaining Expenditure'].append(Spent-Receive)
     
     def EqualDistributor(self, TotalAmount, numberOfPeople):
         return TotalAmount/numberOfPeople
@@ -33,14 +33,12 @@ class Distributor():
         self.entryBalancePerPerson(
             Name=self.Log.loc[len(self.Log.index) - 1][0],
             Spent=self.Log.loc[len(self.Log.index) - 1][2], 
-            Receive=self.Log.loc[len(self.Log.index) - 1][2] - self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3])+1 )
-        )
+            )
         for i in self.Log.loc[len(self.Log.index) - 1][3]:
             self.entryBalancePerPerson(
                 Name=i, 
-                Spent=self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3]) + 1),
-                Receive=0
-            )
+                Spent=self.EqualDistributor(self.Log.loc[len(self.Log.index) - 1][2], len(self.Log.loc[len(self.Log.index) - 1][3]))
+                )
 
         if col5.select_slider(f"Log Transaction:{entryNumber+1}", options=['No', 'Yes']) == 'Yes':
             entryNumber+=1
