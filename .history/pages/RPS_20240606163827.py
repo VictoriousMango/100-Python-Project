@@ -5,10 +5,10 @@ import pandas as pd
 st.title("Rock Paper Scissor")
 with st.expander("Rules"):
     st.table([
-        "Welcome to Game of Rock Paper Scissors!!!.",
-        'Test your luck.',
-        'Whoever wins 10 rounds first, wins.',
-        'Check your luck, with this game, after the results.'
+        "Welcome to Game of Rock Paper Scissors!!!",
+        'Test your luck',
+        'Whoever wins 10 rounds first, wins',
+        'Check your luck, with this game, after the results'
     ])
 
 for i in ['Player', 'Computer', 'PlayerScore', 'ComputerScore', '#Draw']:

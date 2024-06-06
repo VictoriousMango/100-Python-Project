@@ -2,15 +2,6 @@ import streamlit as st
 from random import randrange
 import pandas as pd
 
-st.title("Rock Paper Scissor")
-with st.expander("Rules"):
-    st.table([
-        "Welcome to Game of Rock Paper Scissors!!!.",
-        'Test your luck.',
-        'Whoever wins 10 rounds first, wins.',
-        'Check your luck, with this game, after the results.'
-    ])
-
 for i in ['Player', 'Computer', 'PlayerScore', 'ComputerScore', '#Draw']:
     if i not in st.session_state:
         st.session_state[i] = 0
@@ -76,5 +67,5 @@ def Lost():
 
 if st.session_state['PlayerScore'] > 9:
     Win()
-if st.session_state['ComputerScore'] > 9:
+if st.session_state['ComputerScore'] < -9:
     Lost()

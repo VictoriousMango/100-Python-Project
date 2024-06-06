@@ -2,13 +2,7 @@ import streamlit as st
 from random import randrange
 import pandas as pd
 st.title("Destroy the Tower!!!")
-with st.expander("Rules"):
-    st.table([
-        "Welcome to Destroy the Tower Game!!!",
-        "Fire 10 units on opponents tower to win!",
-        "If your tower gets more than 5 hits, you loose.",
-        "You can fire from the towers getting damage, to reduce the damage."
-    ])
+st.subheader("Fire 10 units on opponents tower to win!")
 
 if 'mat' not in st.session_state:
     st.session_state['mat'] = [
@@ -48,18 +42,15 @@ def Win():
         data=[st.session_state['mat'][1]],
         columns=['Tower 1', 'Tower 2', 'Tower 3']
     ))
-    st.link_button("Explore more!!", "https://victoriousmango.github.io/Portfolio/")
 
-@st.experimental_dialog("You Lost!!!")
-def Lost():
-    st.table(pd.DataFrame(
-        data=[st.session_state['mat'][1]],
-        columns=['Tower 1', 'Tower 2', 'Tower 3']
-    ))
-    st.link_button("Explore more!!", "https://victoriousmango.github.io/Portfolio/")
-
+# @st.experimental_dialog("You Lost!!!")
+# def Lost():
+#     st.table(pd.DataFrame(
+#         data=[st.session_state['mat'][1]],
+#         columns=['Tower 1', 'Tower 2', 'Tower 3']
+#     ))
 for i in st.session_state['mat'][1]:
     if i > 9:
         Win()
-    if i < -5:
+    if i < 0:
         Lost()

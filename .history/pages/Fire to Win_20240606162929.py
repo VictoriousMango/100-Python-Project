@@ -3,12 +3,9 @@ from random import randrange
 import pandas as pd
 st.title("Destroy the Tower!!!")
 with st.expander("Rules"):
-    st.table([
-        "Welcome to Destroy the Tower Game!!!",
-        "Fire 10 units on opponents tower to win!",
-        "If your tower gets more than 5 hits, you loose.",
-        "You can fire from the towers getting damage, to reduce the damage."
-    ])
+    st.subheader("Fire 10 units on opponents tower to win!")
+    st.subheader("If your tower gets more than 5 hits, you loose.")
+    st.subheader("You can fire from the towers getting damage, to reduce the damage.")
 
 if 'mat' not in st.session_state:
     st.session_state['mat'] = [
@@ -61,5 +58,5 @@ def Lost():
 for i in st.session_state['mat'][1]:
     if i > 9:
         Win()
-    if i < -5:
+    if i < 0:
         Lost()

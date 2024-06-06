@@ -61,5 +61,5 @@ def Lost():
 for i in st.session_state['mat'][1]:
     if i > 9:
         Win()
-    if i < -5:
+    if i < -3:
         Lost()

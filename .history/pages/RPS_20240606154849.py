@@ -2,15 +2,6 @@ import streamlit as st
 from random import randrange
 import pandas as pd
 
-st.title("Rock Paper Scissor")
-with st.expander("Rules"):
-    st.table([
-        "Welcome to Game of Rock Paper Scissors!!!.",
-        'Test your luck.',
-        'Whoever wins 10 rounds first, wins.',
-        'Check your luck, with this game, after the results.'
-    ])
-
 for i in ['Player', 'Computer', 'PlayerScore', 'ComputerScore', '#Draw']:
     if i not in st.session_state:
         st.session_state[i] = 0
@@ -52,29 +43,6 @@ def isScissor():
     shoot()
 
 col1, col2, col3 = st.columns(3)
-col1.button("🪨", on_click=isRock)
-col2.button("📄", on_click=isPaper)
-col3.button("✂️", on_click=isScissor)
-
-@st.experimental_dialog("You Win!!!")
-def Win():
-    mat = [[st.session_state['PlayerScore'], st.session_state['ComputerScore'], st.session_state['#Draw']]]
-    st.table(pd.DataFrame(
-        data=mat, 
-        columns=['Your Score', 'Computers Score', 'Number of Draws']
-        ))
-    st.link_button("Explore more!!", "https://victoriousmango.github.io/Portfolio/")
-
-@st.experimental_dialog("You Lost!!!")
-def Lost():
-    mat = [[st.session_state['PlayerScore'], st.session_state['ComputerScore'], st.session_state['#Draw']]]
-    st.table(pd.DataFrame(
-        data=mat, 
-        columns=['Your Score', 'Computers Score', 'Number of Draws']
-        ))
-    st.link_button("Explore more!!", "https://victoriousmango.github.io/Portfolio/")
-
-if st.session_state['PlayerScore'] > 9:
-    Win()
-if st.session_state['ComputerScore'] > 9:
-    Lost()
+col1.button("Rock", on_click=isRock)
+col2.button("Paper", on_click=isPaper)
+col3.button("Scissor", on_click=isScissor)
