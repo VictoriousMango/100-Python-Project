@@ -5,7 +5,7 @@ import pandas as pd
 ### Enter Player Name
 @st.experimental_dialog("User Info")
 def Player():
-    st.session_state['PlayerName'] = st.text_input("Enter your Name:")
+    st.session_state['PlayerName'] = st.text_input("Because...")
     if st.button("Submit"):
         st.rerun()
 
@@ -14,7 +14,7 @@ with st.expander("Rules"):
     st.table([
         "Welcome to Game of Rock Paper Scissors!!!.",
         'Test your luck.',
-        'Whoever wins 5 rounds first, wins.',
+        'Whoever wins 10 rounds first, wins.',
         'Check your luck, with this game, after the results.'
     ])
 
@@ -80,9 +80,9 @@ def Lost():
         ))
     st.link_button("Explore more!!", "https://victoriousmango.github.io/Portfolio/")
 
-if st.session_state['PlayerScore'] > 4:
+if st.session_state['PlayerScore'] > 9:
     Win()
-if st.session_state['ComputerScore'] > 4:
+if st.session_state['ComputerScore'] > 9:
     Lost()
 converter={
     'Rock': '🪨',
