@@ -3,22 +3,22 @@ import smtplib
 import pandas as pd
 
 class Distributor():
-    def __init__(self):
-        # self.numberOfPeople = numberOfPeople
-        # self.TotalAmount = TotalAmount
+    def __init__(self, numberOfPeople, TotalAmount):
+        self.numberOfPeople = numberOfPeople
+        self.TotalAmount = TotalAmount
         self.Log = pd.DataFrame(columns=['Who Paid', 'Item', 'How much Paid', 'Contributors'])
         self.BalanceTable = pd.DataFrame(columns=['Name', 'Have Spent', 'Will Receive', 'Net Total'])
         self.BalancePerPerson = {'Name':[], 'Have Spent':[], 'Will Receive':[], 'Net Total':[]}
     
     def entryBalancePerPerson(self, Name, Spent, Receive):
-        # print(Name, Spent, Receive)
         #If the Name already made an entry
         #Else: to create a new entry
         if Name in self.BalancePerPerson['Name']:
-            self.BalancePerPerson['Have Spent'][self.BalancePerPerson['Name'].index(Name)] += Spent
-            self.BalancePerPerson['Will Receive'][self.BalancePerPerson['Name'].index(Name)] += Receive
-            self.BalancePerPerson['Net Total'][self.BalancePerPerson['Name'].index(Name)] = self.BalancePerPerson['Have Spent'][self.BalancePerPerson['Name'].index(Name)] - self.BalancePerPerson['Will Receive'][self.BalancePerPerson['Name'].index(Name)]
+            print(f"{Name} Exists")
+            print(self.BalancePerPerson)
+            print(self.BalancePerPerson['Name'].index(Name))
         else:
+            print(f"New entry for {Name} has been made")
             self.BalancePerPerson['Name'].append(Name)
             self.BalancePerPerson['Have Spent'].append(Spent)
             self.BalancePerPerson['Will Receive'].append(Receive)
@@ -89,22 +89,22 @@ class Email ():
             print(f"Email Sent to: {self.receiver}")
         
 st.title("Party Contributor!!!")
-# print('########################## New Run')
-# distributor = [
-#     st.number_input("Enter the Total Amount:"),
-#     st.number_input("Number of people:")
-# ]
+
+distributor = [
+    st.number_input("Enter the Total Amount:"),
+    st.number_input("Number of people:")
+]
 
 
 
-# if st.button("Calculate Equal Distribution"):
-#     with st.spinner("Generating per person Contribution!!!"):
-#         message = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0]).EqualDistributor()
-#     st.success(message)
+if st.button("Calculate Equal Distribution"):
+    with st.spinner("Generating per person Contribution!!!"):
+        message = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0]).EqualDistributor()
+    st.success(message)
 
 with st.expander("Log Distribution"):
     with st.spinner("Generating per person Contribution!!!"):
-        Party = Distributor()
+        Party = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0])
         Log = Party.NonLinerDistribution()
 st.table(Log)
 

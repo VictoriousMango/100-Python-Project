@@ -3,9 +3,9 @@ import smtplib
 import pandas as pd
 
 class Distributor():
-    def __init__(self):
-        # self.numberOfPeople = numberOfPeople
-        # self.TotalAmount = TotalAmount
+    def __init__(self, numberOfPeople, TotalAmount):
+        self.numberOfPeople = numberOfPeople
+        self.TotalAmount = TotalAmount
         self.Log = pd.DataFrame(columns=['Who Paid', 'Item', 'How much Paid', 'Contributors'])
         self.BalanceTable = pd.DataFrame(columns=['Name', 'Have Spent', 'Will Receive', 'Net Total'])
         self.BalancePerPerson = {'Name':[], 'Have Spent':[], 'Will Receive':[], 'Net Total':[]}
@@ -104,7 +104,7 @@ st.title("Party Contributor!!!")
 
 with st.expander("Log Distribution"):
     with st.spinner("Generating per person Contribution!!!"):
-        Party = Distributor()
+        Party = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0])
         Log = Party.NonLinerDistribution()
 st.table(Log)
 

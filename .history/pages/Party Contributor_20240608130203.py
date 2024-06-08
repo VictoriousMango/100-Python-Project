@@ -3,9 +3,9 @@ import smtplib
 import pandas as pd
 
 class Distributor():
-    def __init__(self):
-        # self.numberOfPeople = numberOfPeople
-        # self.TotalAmount = TotalAmount
+    def __init__(self, numberOfPeople, TotalAmount):
+        self.numberOfPeople = numberOfPeople
+        self.TotalAmount = TotalAmount
         self.Log = pd.DataFrame(columns=['Who Paid', 'Item', 'How much Paid', 'Contributors'])
         self.BalanceTable = pd.DataFrame(columns=['Name', 'Have Spent', 'Will Receive', 'Net Total'])
         self.BalancePerPerson = {'Name':[], 'Have Spent':[], 'Will Receive':[], 'Net Total':[]}
@@ -89,22 +89,22 @@ class Email ():
             print(f"Email Sent to: {self.receiver}")
         
 st.title("Party Contributor!!!")
-# print('########################## New Run')
-# distributor = [
-#     st.number_input("Enter the Total Amount:"),
-#     st.number_input("Number of people:")
-# ]
+print('########################## New Run')
+distributor = [
+    st.number_input("Enter the Total Amount:"),
+    st.number_input("Number of people:")
+]
 
 
 
-# if st.button("Calculate Equal Distribution"):
-#     with st.spinner("Generating per person Contribution!!!"):
-#         message = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0]).EqualDistributor()
-#     st.success(message)
+if st.button("Calculate Equal Distribution"):
+    with st.spinner("Generating per person Contribution!!!"):
+        message = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0]).EqualDistributor()
+    st.success(message)
 
 with st.expander("Log Distribution"):
     with st.spinner("Generating per person Contribution!!!"):
-        Party = Distributor()
+        Party = Distributor(numberOfPeople=distributor[1], TotalAmount=distributor[0])
         Log = Party.NonLinerDistribution()
 st.table(Log)
 
