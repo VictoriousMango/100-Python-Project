@@ -1,6 +1,23 @@
 # 100-Python-Project
 This will be a Practices repository, to brush up my skills for Python Development.
 
+## Projects Table
+
+| #  | Project Name           | Description  | Libraries  | Link       |
+|----|------------------------|-------------|------------|------------|
+| A  | **Beginner (6)**       | --          | --         | --         |
+| 1  | Band Name Generator    | Description | Streamlit, Random | [Project A1](#) |
+| 2  | Party Contributor      | Description | Streamlit  | [Project A2](#) |
+| 3  | Fire to Win           | Description | Streamlit, Pandas, Random | [Project A3](#) |
+| 4  | Rock Paper Scissor    | Description | Streamlit, Pandas, Random | [Project A4](#) |
+| 5  | Password Generator    | Description | Streamlit, Random | [Project A5](#) |
+| 6  | Reborg's World        | A website to learn fundamentals, using interactive coding games. | -- | [Project A6](#) |
+| B  | **Intermediate (1)**  | --          | --         | --         |
+| 1  | Understanding Data    | An application to train ML models on custom datasets, to generate weights for processing. | -- | [Project B1](#) |
+| C  | **Advanced (0)**      | --          | --         | --         |
+| D  | **Professional (0)**  | --          | --         | --         |
+
+
 |Branch|Purpose|
 |:---:|:---:|
 |main|Contains website (GitHub Hosted) links and code|
