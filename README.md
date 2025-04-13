@@ -130,4 +130,3 @@ Projects requiring **7+ Advanced skills or Professional-specific skills** = Prof
    - **Professional:** >7 Advanced or Professional-specific skills  
 
 ---
-
