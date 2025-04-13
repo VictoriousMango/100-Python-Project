@@ -2,6 +2,9 @@ import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
 
+st.write("# Skills Chart")
+
+
 def radarPlot(selection, skill_selection):
         # Sample dataset
     data = {
