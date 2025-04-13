@@ -1,5 +1,6 @@
 import streamlit as st
 import turtle
+st.set_page_config(initial_sidebar_state="collapsed")
 
 def T_Graphics():
     turtle.bgcolor("black")

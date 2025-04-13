@@ -1,6 +1,7 @@
 import streamlit as st
 from random import randrange
 import pandas as pd
+st.set_page_config(initial_sidebar_state="collapsed")
 
 ### Enter Player Name
 @st.experimental_dialog("User Info")

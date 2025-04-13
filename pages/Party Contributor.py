@@ -1,6 +1,7 @@
 import streamlit as st
 import smtplib
 import pandas as pd
+st.set_page_config(initial_sidebar_state="collapsed")
 
 class Distributor():
     def __init__(self):

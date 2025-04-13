@@ -1,5 +1,6 @@
 import streamlit as st
 import random
+st.set_page_config(initial_sidebar_state="collapsed")
 
 smallAlphabet = [chr(i) for i in range(97, 123)]
 CapitalAlphabet = [chr(i) for i in range(65, 91)]
