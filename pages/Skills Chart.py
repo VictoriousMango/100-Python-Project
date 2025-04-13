@@ -5,234 +5,11 @@ import plotly.graph_objects as go
 st.write("# Skills Chart")
 
 
-def radarPlot(selection, skill_selection):
-        # Sample dataset
-    data = {
-        "Category": selection,
-        "Proficiency": [len(skill_selection[i])/len(skills[i]) * 100 for i in selection]  # Example proficiency calculation
-    }
-    df = pd.DataFrame(data)
-
-    # Streamlit app
-    st.title("Skills Proficiency Radar Chart")
-    st.write("Visualize proficiency across skill categories.")
-
-    # Create radar chart
-    fig = go.Figure()
-
-    fig.add_trace(go.Scatterpolar(
-        r=df["Proficiency"].tolist() + [df["Proficiency"].iloc[0]],  # Close the loop
-        theta=df["Category"].tolist() + [df["Category"].iloc[0]],  # Close the loop
-        fill='toself',
-        name='Proficiency',
-        line=dict(color='#ff0000', width=2),
-        fillcolor='rgba(31, 119, 180, 0.3)',
-        hovertemplate='%{theta}: %{r}%'
-    ))
-
-    # Update layout for modern look
-    fig.update_layout(
-        polar=dict(
-            radialaxis=dict(
-                visible=True,
-                range=[0, 100],
-                tickvals=[20, 40, 60, 80, 100],
-                ticktext=['20%', '40%', '60%', '80%', '100%'],
-                showline=True,
-                linewidth=1,
-                gridcolor='rgba(128, 128, 128, 0.2)'
-            ),
-            angularaxis=dict(
-                showline=True,
-                linewidth=1,
-                gridcolor='rgba(128, 128, 128, 0.2)',
-                rotation=90,
-                direction="clockwise"
-            ),
-            bgcolor='rgba(245, 245, 245, 0)'
-        ),
-        showlegend=True,
-        title=dict(
-            text="Skills Proficiency Overview",
-            x=0.5,
-            xanchor="center",
-            font=dict(size=18, color="#333")
-        ),
-        template="plotly_white",
-        height=500,
-        margin=dict(l=40, r=40, t=80, b=40)
-    )
-
-    # Display chart
-    st.plotly_chart(fig, use_container_width=True)
-
-# Dictionary of fields and their corresponding resume-ready skills
-tab_cs, tab_oe = st.tabs(
-    ["Computer Science", "Optical Engineering"]
-)
-with tab_cs:
-    skills = {
-    "Computer Vision": [
-        "Image Processing",
-        "Object Detection",
-        "Image Segmentation",
-        "Facial Recognition",
-        "Optical Character Recognition (OCR)",
-        "Feature Extraction",
-        "3D Reconstruction",
-        "OpenCV",
-        "YOLO",
-        "Convolutional Neural Networks (CNNs)"
-    ],
-    "Deep Learning": [
-        "Neural Network Architecture Design",
-        "Convolutional Neural Networks (CNNs)",
-        "Recurrent Neural Networks (RNNs)",
-        "Long Short-Term Memory (LSTM) Networks",
-        "Generative Adversarial Networks (GANs)",
-        "Transfer Learning",
-        "Hyperparameter Tuning",
-        "TensorFlow",
-        "PyTorch",
-        "Model Optimization"
-    ],
-    "Large Language Models (LLMs)": [
-        "Natural Language Processing (NLP)",
-        "Text Generation",
-        "Sentiment Analysis",
-        "Named Entity Recognition (NER)",
-        "Text Summarization",
-        "Question Answering Systems",
-        "Prompt Engineering",
-        "Fine-Tuning LLMs",
-        "Transformers",
-        "Hugging Face"
-    ],
-    "Generative AI": [
-        "Content Generation",
-        "Image Synthesis",
-        "Text-to-Image Generation",
-        "Style Transfer",
-        "Variational Autoencoders (VAEs)",
-        "Generative Adversarial Networks (GANs)",
-        "Music Generation",
-        "Synthetic Data Creation",
-        "Stable Diffusion",
-        "DALL-E"
-    ],
-    "Agentic AI": [
-        "Autonomous Decision Making",
-        "Reinforcement Learning",
-        "Multi-Agent Systems",
-        "Task Automation",
-        "Environment Interaction",
-        "Policy Optimization",
-        "Goal-Oriented AI Design",
-        "OpenAI Gym",
-        "Agent Simulation",
-        "Behavioral Modeling"
-    ],
-    "Python": [
-        "Python Programming",
-        "Data Analysis with Pandas",
-        "Data Visualization with Matplotlib",
-        "Web Scraping",
-        "API Development",
-        "Script Automation",
-        "NumPy",
-        "SciPy",
-        "Flask",
-        "Django"
-    ],
-    "Web Development": [
-        "Full-Stack Web Development",
-        "Responsive Web Design",
-        "RESTful API Development",
-        "Web Application Security",
-        "Performance Optimization",
-        "Version Control with Git",
-        "HTML5",
-        "CSS3",
-        "JavaScript",
-        "Node.js"
-    ],
-    "Front End": [
-        "User Interface (UI) Design",
-        "React.js",
-        "Vue.js",
-        "Angular",
-        "TypeScript",
-        "CSS Frameworks (Bootstrap, Tailwind)",
-        "Single Page Applications (SPAs)",
-        "Web Accessibility (WCAG)",
-        "Client-Side Rendering",
-        "State Management"
-    ],
-    "Back End": [
-        "Server-Side Development",
-        "Database Integration",
-        "API Design and Development",
-        "Authentication and Authorization",
-        "Microservices Architecture",
-        "Express.js",
-        "Django",
-        "Spring Boot",
-        "GraphQL",
-        "Serverless Computing"
-    ],
-    "Databases": [
-        "Database Design",
-        "SQL Query Optimization",
-        "NoSQL Databases",
-        "Data Modeling",
-        "Database Administration",
-        "MySQL",
-        "PostgreSQL",
-        "MongoDB",
-        "Redis",
-        "Elasticsearch"
-    ],
-    "DevOps": [
-        "Continuous Integration/Continuous Deployment (CI/CD)",
-        "Infrastructure as Code (IaC)",
-        "Cloud Deployment",
-        "Monitoring and Logging",
-        "Configuration Management",
-        "Jenkins",
-        "Ansible",
-        "Terraform",
-        "AWS",
-        "Azure"
-    ],
-    "Docker": [
-        "Containerization",
-        "Docker Compose",
-        "Container Orchestration",
-        "Image Optimization",
-        "Dockerfile Creation",
-        "Microservices Deployment",
-        "Container Security",
-        "Docker Swarm",
-        "Kubernetes Integration",
-        "Container Networking"
-    ],
-    "Linux": [
-        "Linux System Administration",
-        "Bash Scripting",
-        "Server Configuration",
-        "File System Management",
-        "Network Troubleshooting",
-        "Cron Jobs",
-        "SSH Management",
-        "Ubuntu",
-        "CentOS",
-        "System Monitoring"
-    ]
-}
+def radarPlot(skills):
     df = pd.DataFrame(skills)
     st.dataframe(df, use_container_width=True)
     selection = st.pills(
-    "Skills",
+    f"Skills",
     options=skills.keys(),
     selection_mode="multi"
     )
@@ -244,10 +21,131 @@ with tab_cs:
         options=skills[i],
         selection_mode="multi"
         )
-        st.write(f"Skills in {i}: {skill_selection[i]}")
+        st.info(f"{i}: {", ".join(skill_selection[i])}")
     # Web Chart
     if selection and skill_selection:
-        radarPlot(selection, skill_selection)
+        data = {
+            "Category": selection,
+            "Proficiency": [len(skill_selection[i])/len(skills[i]) * 100 for i in selection]  # Example proficiency calculation
+        }
+        df = pd.DataFrame(data)
+
+        # Streamlit app
+        st.title("Skills Proficiency Radar Chart")
+        st.write("Visualize proficiency across skill categories.")
+
+        # Create radar chart
+        fig = go.Figure()
+
+        fig.add_trace(go.Scatterpolar(
+            r=df["Proficiency"].tolist() + [df["Proficiency"].iloc[0]],  # Close the loop
+            theta=df["Category"].tolist() + [df["Category"].iloc[0]],  # Close the loop
+            fill='toself',
+            name='Proficiency',
+            line=dict(color='#ff0000', width=2),
+            fillcolor='rgba(31, 119, 180, 0.3)',
+            hovertemplate='%{theta}: %{r}%'
+        ))
+
+        # Update layout for modern look
+        fig.update_layout(
+            polar=dict(
+                radialaxis=dict(
+                    visible=True,
+                    range=[0, 100],
+                    tickvals=[20, 40, 60, 80, 100],
+                    ticktext=['20%', '40%', '60%', '80%', '100%'],
+                    showline=True,
+                    linewidth=1,
+                    gridcolor='rgba(128, 128, 128, 0.2)'
+                ),
+                angularaxis=dict(
+                    showline=True,
+                    linewidth=1,
+                    gridcolor='rgba(128, 128, 128, 0.2)',
+                    rotation=90,
+                    direction="clockwise"
+                ),
+                bgcolor='rgba(245, 245, 245, 0)'
+            ),
+            showlegend=True,
+            title=dict(
+                text="Skills Proficiency Overview",
+                x=0.5,
+                xanchor="center",
+                font=dict(size=18, color="#333")
+            ),
+            template="plotly_white",
+            height=500,
+            margin=dict(l=40, r=40, t=80, b=40)
+        )
+
+        # Display chart
+        st.plotly_chart(fig, use_container_width=True)
+
+# Dictionary of fields and their corresponding resume-ready skills
+tab_py, tab_oe, tab_AI, tab_cv, tab_dl, tab_llm, tab_AAI = st.tabs(["Python", "Optical Engineering", "AI", "Computer Vision", "Deep Learning", "LLM", "Agentic AI"])
+with tab_py:
+    skills= {
+    "Core Programming": [
+        "Python Software Development",
+        "Object-Oriented Programming",
+        "Functional Programming",
+        "Multithreading and Concurrency",
+        "Exception Handling",
+        "Code Optimization",
+        "Unit Testing with PyTest",
+        "Data Structures and Algorithms",
+        "Memory Management",
+        "Regular Expressions",
+        "File I/O Operations",
+        "Python Standard Library"
+    ],
+    "Data Analysis and Visualization": [
+        "Data Analysis with Pandas",
+        "Data Visualization with Matplotlib",
+        "NumPy Array Operations",
+        "Seaborn Visualization",
+        "Data Cleaning and Preprocessing",
+        "Time Series Analysis",
+        "Exploratory Data Analysis",
+        "SciPy for Scientific Computing",
+        "Jupyter Notebook Workflow",
+        "Statistical Modeling",
+        "Data Pipeline Development",
+        "Plotly Interactive Visuals"
+    ],
+    "Web and Automation": [
+        "Flask Web Development",
+        "Django Application Development",
+        "RESTful API Design",
+        "Web Scraping with BeautifulSoup",
+        "Selenium Web Automation",
+        "FastAPI Implementation",
+        "Script Automation",
+        "API Automation with Requests",
+        "Database Integration",
+        "Asynchronous Programming",
+        "GUI Automation with PyAutoGUI",
+        "Task Scheduling with Celery"
+    ],
+    "Development Tools and Practices": [
+        "Git Version Control",
+        "Virtual Environment Management",
+        "Code Linting with Flake8",
+        "Continuous Integration Setup",
+        "Package Development with Poetry",
+        "Documentation with Sphinx",
+        "Profiling and Optimization",
+        "Dependency Management",
+        "Docker Container Scripting",
+        "IPython Debugging",
+        "Code Review Practices",
+        "Test-Driven Development"
+    ]
+}
+    radarPlot(skills)
+
 with tab_oe:
     skills = {
     "Core Optical Engineering": [
@@ -349,22 +247,309 @@ with tab_oe:
         "Quantum Photonics"
     ]
 }
-    df = pd.DataFrame(skills)
-    st.dataframe(df, use_container_width=True)
-    selection = st.pills(
-    "Skills",
-    options=skills.keys(),
-    selection_mode="multi"
-    )
-    st.write(f"You selected: {selection}")
-    skill_selection = dict()
-    for i in selection:
-        skill_selection[i] = st.pills(
-        i,
-        options=skills[i],
-        selection_mode="multi"
-        )
-        st.write(f"Skills in {i}: {skill_selection[i]}")
-    # Web Chart
-    if selection and skill_selection:
-        radarPlot(selection, skill_selection)
+    radarPlot(skills)
+
+with tab_AI:
+    skills = {
+        "Machine Learning Foundations": [
+            "Supervised Learning",
+            "Unsupervised Learning",
+            "Reinforcement Learning",
+            "Feature Engineering",
+            "Model Evaluation Metrics",
+            "Cross-Validation Techniques",
+            "Hyperparameter Tuning",
+            "Ensemble Methods",
+            "Scikit-Learn Implementation",
+            "Dimensionality Reduction",
+            "Anomaly Detection",
+            "Time Series Forecasting"
+        ],
+        "AI Model Development": [
+            "Neural Network Design",
+            "Gradient Descent Optimization",
+            "Loss Function Engineering",
+            "TensorFlow Model Building",
+            "PyTorch Implementation",
+            "Model Interpretability",
+            "Transfer Learning",
+            "Federated Learning",
+            "AutoML Integration",
+            "Pipeline Automation",
+            "Model Deployment",
+            "Explainable AI"
+        ],
+        "Specialized AI Applications": [
+            "Natural Language Processing",
+            "Computer Vision Algorithms",
+            "Speech Recognition Systems",
+            "Recommendation Systems",
+            "Generative Adversarial Networks",
+            "Knowledge Graph Construction",
+            "Sentiment Analysis",
+            "AI Ethics Implementation",
+            "Robotic Process Automation",
+            "AI for Healthcare",
+            "AI-Driven Optimization",
+            "Real-Time Inference"
+        ],
+        "AI Infrastructure and Tools": [
+            "MLOps Workflow",
+            "Kubernetes Model Deployment",
+            "AWS SageMaker Integration",
+            "Model Monitoring",
+            "Data Versioning",
+            "JupyterLab for AI",
+            "Hugging Face Transformers",
+            "ONNX Model Conversion",
+            "Ray for Distributed AI",
+            "MLflow Experiment Tracking",
+            "Cloud AI Services",
+            "Edge AI Deployment"
+        ]
+    }
+    radarPlot(skills)
+
+with tab_cv:
+    skills = {
+        "Core Vision Techniques": [
+            "Image Processing",
+            "Object Detection",
+            "Image Segmentation",
+            "Feature Extraction",
+            "Edge Detection",
+            "Image Classification",
+            "Optical Flow Analysis",
+            "3D Reconstruction",
+            "Image Registration",
+            "Facial Recognition",
+            "Motion Tracking",
+            "Template Matching"
+        ],
+        "Advanced Vision Algorithms": [
+            "Convolutional Neural Networks",
+            "YOLO Implementation",
+            "R-CNN Model Development",
+            "Semantic Segmentation",
+            "Instance Segmentation",
+            "Pose Estimation",
+            "Depth Estimation",
+            "Visual SLAM",
+            "Image Super-Resolution",
+            "Video Frame Analysis",
+            "Attention Mechanisms",
+            "Generative Vision Models"
+        ],
+        "Tools and Frameworks": [
+            "OpenCV Development",
+            "TensorFlow for Vision",
+            "PyTorch Vision Models",
+            "Keras Image Processing",
+            "MATLAB Vision Toolbox",
+            "Pillow Image Manipulation",
+            "Dlib for Facial Analysis",
+            "Albumentations Augmentation",
+            "CUDA GPU Acceleration",
+            "ONNX Model Optimization",
+            "LabelImg Annotation",
+            "VGG Image Annotator"
+        ],
+        "Applications and Deployment": [
+            "Autonomous Vehicle Vision",
+            "Medical Image Analysis",
+            "Augmented Reality Systems",
+            "Surveillance Systems",
+            "Industrial Inspection",
+            "Biometric Authentication",
+            "Real-Time Video Processing",
+            "Drone Navigation Vision",
+            "Retail Analytics",
+            "Vision-Based Robotics",
+            "Edge Device Deployment",
+            "Cloud Vision APIs"
+        ]
+    }
+    radarPlot(skills)
+
+with tab_dl:
+    skills = {
+        "Neural Network Fundamentals": [
+            "Neural Network Architecture",
+            "Backpropagation Implementation",
+            "Activation Functions",
+            "Loss Function Design",
+            "Gradient Descent Optimization",
+            "Batch Normalization",
+            "Dropout Regularization",
+            "Weight Initialization",
+            "Stochastic Gradient Descent",
+            "Learning Rate Scheduling",
+            "Overfitting Mitigation",
+            "Network Pruning"
+        ],
+        "Advanced Architectures": [
+            "Convolutional Neural Networks",
+            "Recurrent Neural Networks",
+            "Long Short-Term Memory (LSTM)",
+            "Gated Recurrent Units (GRU)",
+            "Transformer Models",
+            "Generative Adversarial Networks",
+            "Variational Autoencoders",
+            "Attention Mechanisms",
+            "Residual Networks (ResNet)",
+            "Graph Neural Networks",
+            "Capsule Networks",
+            "Self-Supervised Learning"
+        ],
+        "Frameworks and Optimization": [
+            "TensorFlow Model Development",
+            "PyTorch Deep Learning",
+            "Keras Model Prototyping",
+            "MXNet Implementation",
+            "ONNX Model Conversion",
+            "Model Quantization",
+            "Distributed Training",
+            "Mixed Precision Training",
+            "Hyperparameter Optimization",
+            "Neural Architecture Search",
+            "Gradient Clipping",
+            "AutoML for Deep Learning"
+        ],
+        "Deployment and Applications": [
+            "Model Deployment to Production",
+            "Edge Device Optimization",
+            "Cloud Model Serving",
+            "Real-Time Inference",
+            "Computer Vision Applications",
+            "Natural Language Processing",
+            "Speech Synthesis Models",
+            "Recommendation Systems",
+            "Time Series Prediction",
+            "Healthcare Diagnostics",
+            "Robotics Control Systems",
+            "Anomaly Detection Systems"
+        ]
+    }
+    radarPlot(skills)
+
+with tab_llm:
+    skills = {
+        "Core NLP Techniques": [
+            "Natural Language Processing",
+            "Text Preprocessing",
+            "Tokenization Techniques",
+            "Sentiment Analysis",
+            "Named Entity Recognition",
+            "Text Classification",
+            "Word Embeddings",
+            "Part-of-Speech Tagging",
+            "Dependency Parsing",
+            "Text Summarization",
+            "Question Answering",
+            "Topic Modeling"
+        ],
+        "LLM Architecture and Training": [
+            "Transformer Architecture",
+            "BERT Model Fine-Tuning",
+            "GPT Model Development",
+            "Attention Mechanism Design",
+            "Pretraining Strategies",
+            "Transfer Learning for NLP",
+            "Prompt Engineering",
+            "Parameter-Efficient Fine-Tuning",
+            "Instruction Tuning",
+            "Reinforcement Learning from Human Feedback",
+            "Model Scaling",
+            "Context Window Optimization"
+        ],
+        "Tools and Frameworks": [
+            "Hugging Face Transformers",
+            "PyTorch for NLP",
+            "TensorFlow Text Processing",
+            "SpaCy Pipeline Development",
+            "NLTK Text Analysis",
+            "Fairseq Model Training",
+            "DeepSpeed Optimization",
+            "Megatron-LM Scaling",
+            "LangChain Integration",
+            "AllenNLP Framework",
+            "Sentence Transformers",
+            "ONNX for NLP Models"
+        ],
+        "Applications and Deployment": [
+            "Chatbot Development",
+            "Text Generation Systems",
+            "Machine Translation",
+            "Conversational AI",
+            "Content Moderation",
+            "Knowledge Base Querying",
+            "Automated Writing Assistance",
+            "Legal Document Analysis",
+            "Customer Support Automation",
+            "Multimodal LLMs",
+            "Cloud LLM Deployment",
+            "Ethical AI Implementation"
+        ]
+    }
+    radarPlot(skills)
+
+with tab_AAI:
+    skills = {
+        "Agent Design and Behavior": [
+            "Autonomous Agent Development",
+            "Goal-Oriented Behavior Design",
+            "Multi-Agent System Architecture",
+            "Decision-Making Algorithms",
+            "Environment Interaction Modeling",
+            "Agent Communication Protocols",
+            "Behavioral Adaptation",
+            "Task Decomposition",
+            "Planning and Execution",
+            "Agent Simulation",
+            "Cognitive Modeling",
+            "State Space Representation"
+        ],
+        "Reinforcement Learning": [
+            "Reinforcement Learning Design",
+            "Q-Learning Implementation",
+            "Deep Q-Networks (DQN)",
+            "Policy Gradient Methods",
+            "Actor-Critic Models",
+            "Reward Function Engineering",
+            "Exploration-Exploitation Strategies",
+            "Multi-Agent Reinforcement Learning",
+            "Inverse Reinforcement Learning",
+            "Hierarchical RL",
+            "Model-Based RL",
+            "OpenAI Gym Integration"
+        ],
+        "Tools and Frameworks": [
+            "PyTorch for Agent Training",
+            "TensorFlow Agent Models",
+            "RLlib for Scalable RL",
+            "Stable-Baselines3 Implementation",
+            "Gymnasium Environment Design",
+            "Unity ML-Agents",
+            "PettingZoo Multi-Agent Environments",
+            "Ray for Distributed Agents",
+            "MESA Agent-Based Modeling",
+            "LangChain for Agentic Workflows",
+            "JAX for Optimization",
+            "MATLAB for Simulations"
+        ],
+        "Applications and Deployment": [
+            "Robotic Task Automation",
+            "Game AI Development",
+            "Supply Chain Optimization",
+            "Smart Grid Management",
+            "Autonomous Vehicle Navigation",
+            "Conversational Agent Systems",
+            "Financial Trading Agents",
+            "Healthcare Workflow Automation",
+            "Industrial Process Control",
+            "Edge Device Agent Deployment",
+            "Ethical Agent Design",
+            "Real-Time Decision Systems"
+        ]
+    }
+    radarPlot(skills)
