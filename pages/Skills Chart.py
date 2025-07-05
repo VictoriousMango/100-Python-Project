@@ -22,7 +22,7 @@ def radarPlot(skills):
         options=skills[i],
         selection_mode="multi"
         )
-        st.info(f"{i}: {", ".join(skill_selection[i])}")
+        st.info(f"{i}: {', '.join(skill_selection[i])}")
     # Web Chart
     if selection and skill_selection:
         data = {
