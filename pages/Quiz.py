@@ -26,14 +26,6 @@ st.markdown("""
         margin-bottom: 2rem;
     }
     
-    .quiz-container {
-        background: #f8f9ff;
-        padding: 2rem;
-        border-radius: 15px;
-        border-left: 5px solid #667eea;
-        margin: 1rem 0;
-    }
-    
     .timer-display {
         background: linear-gradient(135deg, #ff6b6b, #feca57);
         color: white;
@@ -44,12 +36,17 @@ st.markdown("""
         font-weight: bold;
         margin-bottom: 1rem;
     }
-    
+    # .quiz-container {
+    #     background: #f8f9ff;
+    #     padding: 2rem;
+    #     border-radius: 15px;
+    #     border-left: 5px solid #667eea;
+    #     margin: 1rem 0;
+    # }
     .question-card {
-        background: white;
         padding: 1.5rem;
         border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        box-shadow: 0px 0px 5px rgba(255, 187, 175, 0.5);
         margin: 1rem 0;
     }
     
