@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --border-color: #ddd;
+            --shadow-color: rgba(0,0,0,0.1);
+            --code-bg: #f8f9fa;
+            --code-border: #e9ecef;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --info-color: #3498db;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 15px;
+        }
+        h2, h3, h4, h5, h6 {
+            color: var(--primary-color);
+            margin-top: 2em;
+            margin-bottom: 1em;
+            font-weight: 600;
+        }
+        h3 {
+            font-size: 1.5em;
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 15px;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            background: white;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            transition: all 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            border-color: var(--secondary-color);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item img:hover {
+            transform: scale(1.02);
+        }
+        p {
+            color: #666;
+            text-align: center; /* Justified text for the abstract */
+            width: 100%;
+            border-top: 1px dotted var(--secondary-color);
+            padding-top: 10px;
+        }
+        p:hover {
+            border-bottom-color: var(--accent-color);
+        }
+        pre {
+            background: var(--code-bg);
+            border: 2px solid var(--code-border);
+            border-left: 5px solid var(--secondary-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        pre::before {
+            content: "Code";
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            background: var(--secondary-color);
+            color: white;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 8px 0 8px 0;
+        }
+        code {
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+        }
+        /* Styling for Comments in Python Code */
+        /*
+        This block targets single-line comments (#) within a <pre><code> block
+        and styles them as formal, eye-catching headings.
+        */
+        .comment::before {
+            content: "NOTE: ";
+            font-weight: bold;
+            color: var(--warning-color);
+        }
+
+        /*
+        This style is for a block-level comment,
+        giving it the appearance of an important explanatory note.
+        */
+        .comment.block {
+            display: block;
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--secondary-color);
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            color: var(--text-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            border-radius: 0;
+            font-size: 14px;
+        }
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        a:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Style for the Abstract Section */
+        .abstract-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 2em;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .abstract-section h3 {
+            border-left: none; /* Remove the double border */
+            padding-left: 0;
+            margin-top: 0;
+        }
+
+        .abstract-section p {
+            text-align: justify;
+            border-top: none; /* Remove border from abstract paragraph */
+            padding-top: 0;
+            font-size: 1.1em;
+        }
+
+        /* Style for the Conclusion Section */
+        .conclusion-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 2em;
+            margin-bottom: 2em;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            border-left: 5px solid var(--success-color);
+            border-top: 2px solid var(--success-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .conclusion-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--success-color) 0%, var(--secondary-color) 100%);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+
+        .conclusion-section h3 {
+            border-left: none;
+            padding-left: 0;
+            margin-top: 0;
+            color: var(--success-color);
+            font-size: 1.8em;
+            margin-bottom: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .conclusion-section h3::before {
+            content: '✓';
+            background: var(--success-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .conclusion-section p {
+            text-align: justify;
+            border-top: none;
+            padding-top: 0;
+            font-size: 1.15em;
+            /* color: var(--text-color); */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* --- ADDED FOR TOGGLE --- */
+        /* Style for the row-view state (Toggle OFF) */
+        .gallery-grid.row-view {
+            display: flex;
+            overflow-x: auto;
+            gap: 25px; /* Maintains the original gap */
+            /* Hides the scrollbar */
+            scrollbar-width: none; /* For Firefox */
+            -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+        }
+        .gallery-grid.row-view::-webkit-scrollbar {
+            display: none; /* For Chrome, Safari, and Opera */
+        }
+        /* Ensures items in the row don't shrink and have a fixed width */
+        .gallery-grid.row-view .gallery-item {
+            flex: 0 0 270px; /* Adjust this width if necessary */
+        }
+        /* Style for the grid-view state (Toggle ON) */
+        .gallery-grid.grid-view {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        /* ENHANCED: More visually appealing table */
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            margin-bottom: 40px;
+            border: 2px solid #e8f4f8;
+            position: relative;
+        }
+
+        .table-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--success-color) 0%, var(--secondary-color) 50%, var(--success-color) 100%);
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #3498db 100%);
+            color: white;
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            text-transform: uppercase;
+            font-size: 12px;
+            border-bottom: 3px solid var(--secondary-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th:first-child {
+            border-top-left-radius: 0;
+        }
+
+        th:last-child {
+            border-top-right-radius: 0;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #f0f4f8;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        tr:nth-child(even) {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        tr:nth-child(odd) {
+            background: white;
+        }
+
+        tr:hover {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f0f8ff 100%);
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        td:first-child {
+            border-left: 4px solid transparent;
+            transition: border-left-color 0.3s ease;
+        }
+
+        tr:hover td:first-child {
+            border-left-color: var(--secondary-color);
+        }
+
+        /* Add subtle animation to table rows
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        } */
+
+        tr {
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        /* Styling for a JSON container to match the table and code blocks */
+        /* Styling for a JSON container to create a translucent terminal look */
+        .json-container pre {
+            /* Slightly transparent dark gray background */
+            background: rgba(45, 45, 45, 0.95);
+            /* Lighter text for contrast */
+            color: #f1f1f1;
+            border-left: 5px solid var(--info-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 0;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            /* Inner shadow for depth */
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        /* Print styles */
+        @media print {
+            body {
+                font-size: 12pt;
+                line-height: 1.4;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 18pt;
+                page-break-after: avoid;
+            }
+            h2, h3, h4, h5, h6 {
+                page-break-after: avoid;
+                margin-top: 20pt;
+            }
+            .gallery-grid {
+                gap: 0;
+            }
+            .gallery-item {
+                margin-bottom: 20pt;
+                page-break-inside: avoid;
+                padding: 15pt;
+            }
+            .gallery-item:hover {
+                transform: none;
+            }
+            .gallery-item img {
+                max-height: 400pt;
+            }
+            pre {
+                page-break-inside: avoid;
+                font-size: 10pt;
+            }
+            code {
+                white-space: pre-wrap;
+            }
+            .checkBox {
+                display: none;
+            }
+            .conclusion-section, .abstract-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Log Gallery: TOPIC</h1>
+    <!-- ADDED TOGGLE BUTTON -->
+    <div class="checkBox" style="text-align: right; margin-bottom: 20px;">
+        <label for="layoutToggle">
+            <input type="checkbox" id="layoutToggle">
+            Enable Grid View
+        </label>
+    </div>
+    
+    <!-- NEWLY ADDED ABSTRACT SECTION -->
+    <div class="abstract-section">
+        <h3>Abstract</h3>
+        <p>AbstractVar</p>
+    </div>
+
+    Placeholder_ImageGrid
+
+    Placeholder_Code
+
+    Placeholder_Table
+
+    Placeholder_Terminal
+    
+    <!-- NEW: Conclusion Section -->
+    <div class="conclusion-section">
+        <h3>Conclusion</h3>
+        <p>ConclusionVar</p>
+    </div>
+    
+    <!-- ADDED SCRIPT -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const gallery = document.querySelector('.gallery-grid');
+        const toggle = document.getElementById('layoutToggle');
+        function applyLayout() {
+            if (toggle.checked) {
+                // --- ON STATE: Behave like a grid with 4 elements ---
+                gallery.classList.remove('row-view');
+                gallery.classList.add('grid-view');
+            } else {
+                // --- OFF STATE: Behave like a row with horizontal scroll ---
+                gallery.classList.remove('grid-view');
+                gallery.classList.add('row-view');
+            }
+        }
+        // Set the initial state to 'Off' (row view) on page load
+        toggle.checked = false;
+        applyLayout();
+        // Add an event listener to handle changes
+        toggle.addEventListener('change', applyLayout);
+
+        // Add staggered animation for table rows
+        const tableRows = document.querySelectorAll('tr');
+        tableRows.forEach((row, index) => {
+            row.style.animationDelay = `${index * 0.1}s`;
+        });
+    });
+    </script>
+</body>
+</html>
